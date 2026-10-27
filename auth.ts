@@ -4,6 +4,17 @@ import bcrypt from "bcryptjs"
 import { eq } from "drizzle-orm"
 import { db } from "@/db"
 import { users } from "@/db/schema"
+import * as dotenv from "dotenv"
+import fs from "fs"
+
+if (!process.env.AUTH_SECRET && !process.env.NEXTAUTH_SECRET) {
+  if (fs.existsSync(".env.test")) {
+    dotenv.config({ path: ".env.test" })
+  }
+  if (fs.existsSync(".env.local")) {
+    dotenv.config({ path: ".env.local" })
+  }
+}
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
