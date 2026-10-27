@@ -1,36 +1,60 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Full Stack Open - Next.js Blog App
 
-## Getting Started
+A blog application built with Next.js App Router, TypeScript, Tailwind CSS, NextAuth.js, and Drizzle ORM on PostgreSQL (Neon).
 
-First, run the development server:
+## Requirements
+
+- Node.js 20+
+- PostgreSQL database (Neon or local)
+
+## Environment Variables
+
+Copy `.env.example` to `.env.local` and configure your credentials:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+cp .env.example .env.local
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Required variables:
+- `DATABASE_URL`: Connection string to PostgreSQL
+- `AUTH_SECRET`: Random 32-byte secret string
+- `AUTH_URL`: Canonical URL (e.g. `http://localhost:3000`)
+- `NEXTAUTH_SECRET`: Alias for `AUTH_SECRET`
+- `NEXTAUTH_URL`: Alias for `AUTH_URL`
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Database Migrations
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Generate migration files from schema:
+```bash
+npm run db:generate
+```
 
-## Learn More
+Apply migrations to database:
+```bash
+npm run db:migrate
+```
 
-To learn more about Next.js, take a look at the following resources:
+Or push schema directly:
+```bash
+npm run db:push
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Running the Application
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Development mode:
+```bash
+npm run dev
+```
 
-## Deploy on Vercel
+Production build:
+```bash
+npm run build
+npm run start
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Running Tests
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+End-to-end tests with Playwright:
+```bash
+npm run test:e2e
+```
