@@ -10,11 +10,19 @@ export default async function BlogsPage({
 }) {
   const { filter } = (await searchParams) || {}
 
-  let allBlogs = await db.query.blogs.findMany({
-    orderBy: (blogs, { desc }) => [desc(blogs.likes)],
-  })
+  let allBlogs: any[] = []
+  let dbError: string | null = null
 
-  if (filter) {
+  try {
+    allBlogs = await db.query.blogs.findMany({
+      orderBy: (blogs, { desc }) => [desc(blogs.likes)],
+    })
+  } catch (err: any) {
+    dbError =
+      "Chưa thể kết nối tới Database. Vui lòng kiểm tra biến DATABASE_URL trong .env.local."
+  }
+
+  if (filter && allBlogs.length > 0) {
     const q = filter.toLowerCase()
     allBlogs = allBlogs.filter(
       (b) =>
@@ -33,6 +41,12 @@ export default async function BlogsPage({
           Create New Blog
         </Link>
       </div>
+
+      {dbError && (
+        <div className="p-4 bg-amber-50 border border-amber-200 text-amber-800 rounded-md text-sm">
+          <strong>Thông báo Database:</strong> {dbError}
+        </div>
+      )}
 
       <form method="GET" action="/blogs" className="flex gap-2 max-w-md">
         <input

@@ -4,15 +4,29 @@ import { db } from "@/db"
 export const dynamic = "force-dynamic"
 
 export default async function UsersPage() {
-  const allUsers = await db.query.users.findMany({
-    with: {
-      blogs: true,
-    },
-  })
+  let allUsers: any[] = []
+  let dbError: string | null = null
+
+  try {
+    allUsers = await db.query.users.findMany({
+      with: {
+        blogs: true,
+      },
+    })
+  } catch (err: any) {
+    dbError =
+      "Chưa thể kết nối tới Database. Vui lòng kiểm tra biến DATABASE_URL trong .env.local."
+  }
 
   return (
     <div className="space-y-6">
       <h1 className="text-3xl font-bold text-gray-900">Users</h1>
+
+      {dbError && (
+        <div className="p-4 bg-amber-50 border border-amber-200 text-amber-800 rounded-md text-sm">
+          <strong>Thông báo Database:</strong> {dbError}
+        </div>
+      )}
 
       <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-xs">
         <table className="w-full text-left border-collapse">
