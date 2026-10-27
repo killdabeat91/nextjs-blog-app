@@ -1,60 +1,33 @@
-# Full Stack Open - Next.js Blog App
+# Full Stack Open - Next.js
 
-A blog application built with Next.js App Router, TypeScript, Tailwind CSS, NextAuth.js, and Drizzle ORM on PostgreSQL (Neon).
+Exercises 1-24 for the Next.js section of Full Stack Open.
 
-## Requirements
+## Getting Started
 
-- Node.js 20+
-- PostgreSQL database (Neon or local)
+1. Install packages:
+   ```bash
+   npm install
+   ```
 
-## Environment Variables
+2. Create `.env.local`:
+   ```bash
+   cp .env.example .env.local
+   ```
+   Add your `DATABASE_URL` (Neon PostgreSQL) and `AUTH_SECRET`.
 
-Copy `.env.example` to `.env.local` and configure your credentials:
+3. Push schema to database:
+   ```bash
+   npm run db:push
+   ```
 
-```bash
-cp .env.example .env.local
-```
+4. Start development server:
+   ```bash
+   npm run dev
+   ```
 
-Required variables:
-- `DATABASE_URL`: Connection string to PostgreSQL
-- `AUTH_SECRET`: Random 32-byte secret string
-- `AUTH_URL`: Canonical URL (e.g. `http://localhost:3000`)
-- `NEXTAUTH_SECRET`: Alias for `AUTH_SECRET`
-- `NEXTAUTH_URL`: Alias for `AUTH_URL`
+## Running tests
 
-## Database Migrations
-
-Generate migration files from schema:
-```bash
-npm run db:generate
-```
-
-Apply migrations to database:
-```bash
-npm run db:migrate
-```
-
-Or push schema directly:
-```bash
-npm run db:push
-```
-
-## Running the Application
-
-Development mode:
-```bash
-npm run dev
-```
-
-Production build:
-```bash
-npm run build
-npm run start
-```
-
-## Running Tests
-
-End-to-end tests with Playwright:
+Run playwright e2e tests:
 ```bash
 npm run test:e2e
 ```

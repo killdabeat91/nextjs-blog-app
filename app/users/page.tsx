@@ -14,8 +14,7 @@ export default async function UsersPage() {
       },
     })
   } catch (err: any) {
-    dbError =
-      "Chưa thể kết nối tới Database. Vui lòng kiểm tra biến DATABASE_URL trong .env.local."
+    dbError = "Failed to load users from database."
   }
 
   return (
@@ -24,7 +23,7 @@ export default async function UsersPage() {
 
       {dbError && (
         <div className="p-4 bg-amber-50 border border-amber-200 text-amber-800 rounded-md text-sm">
-          <strong>Thông báo Database:</strong> {dbError}
+          {dbError}
         </div>
       )}
 

@@ -18,8 +18,7 @@ export default async function BlogsPage({
       orderBy: (blogs, { desc }) => [desc(blogs.likes)],
     })
   } catch (err: any) {
-    dbError =
-      "Chưa thể kết nối tới Database. Vui lòng kiểm tra biến DATABASE_URL trong .env.local."
+    dbError = "Failed to load blogs from database."
   }
 
   if (filter && allBlogs.length > 0) {
@@ -44,7 +43,7 @@ export default async function BlogsPage({
 
       {dbError && (
         <div className="p-4 bg-amber-50 border border-amber-200 text-amber-800 rounded-md text-sm">
-          <strong>Thông báo Database:</strong> {dbError}
+          {dbError}
         </div>
       )}
 
